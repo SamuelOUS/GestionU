@@ -20,6 +20,8 @@ class Estudiante:
 class Gestion:
     def __init__(self):
         self.estudiantes = dict[str: Estudiante]
+        self.estudiante_actual: Estudiante = Estudiante("", "", "", "", "")
+        self.cargar_estudiante()
 
     def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
 
@@ -41,6 +43,13 @@ class Gestion:
     def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
         with open ("archivos/usuarios", encoding="utf8", mode="a") as file:
             file.write(f"{nombre}-{apellidos}-{facultad}-{id}-{contrasena}")
+
+    def cargar_estudiante(self):
+        with open("archivos/usuarios", encoding="utf8") as file:
+            datos = csv.reader(file, delimiter="|")
+            estudiantes = map(lambda data: Estudiante(data[0], data[1], data[2]), datos)
+            self.estudiantes = {estudiante.id: estudiante for estudiante in estudiantes}
+
 
 
 class Producto:
