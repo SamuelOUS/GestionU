@@ -16,11 +16,10 @@ class Ventana_principal(QMainWindow):
     def __botones(self):
         self.Registrar_Button.clicked.connect(self.abrir_registro)
 
-
     def abrir_registro(self):
         self.registro.exec()
 
-    def abrir_iniciar_sesion(self):
+    def iniciar_sesion(self):
         pass
 
     def abrir_seleccion(self):
@@ -54,7 +53,7 @@ class Registro(QDialog):
                 facultad = self.lineEdit_facultad.text()
                 id = self.lineEdit_id.text()
                 contrasena = self.lineEdit_contrasena.text()
-                self.lista[0].registrar_estudiante(nombre, apellidos, facultad, id, contrasena)
+                self.lista.registrar_estudiante(nombre, apellidos, facultad, id, contrasena)
 
                 mensaje = QMessageBox(self)
                 mensaje.setWindowTitle("")
@@ -78,9 +77,6 @@ class Registro(QDialog):
             mensaje.setText(err.mensaje)
             mensaje.setStandardButtons(QMessageBox.Ok)
             mensaje.exec()
-
-class Iniciar_Sesion(QDialog):
-    pass
 
 
 class Papeleria(QDialog):
