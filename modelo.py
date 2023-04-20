@@ -1,5 +1,6 @@
 import csv
 from typing import Optional
+from excepciones import *
 
 
 class Estudiante:
@@ -18,7 +19,7 @@ class Estudiante:
 
 class Gestion:
     def __init__(self):
-        self.estudiantes = dict[str: Estudiante] = {}
+        self.estudiantes = dict[str: Estudiante]
 
     def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
 
@@ -27,8 +28,9 @@ class Gestion:
             self.estudiantes[id] = estudiante
             self.agregar_estudiante(nombre, apellidos, facultad, id, contrasena)
 
-            #else:
-            #raise CuentaExistenteError("esta cuenta ya esta registrada")
+        else:
+            raise CuentaExistenteError("Esta cuenta está registrada")
+
 
     def registrado(self, id: int) -> Optional[Estudiante]:
         if id in self.estudiantes.keys():
