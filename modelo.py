@@ -3,12 +3,12 @@ from typing import Optional
 
 
 class Estudiante:
-    def __init__(self, nombre: str, apellidos: str, facultad: str, id: int, contraseña: str):
+    def __init__(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
         self.nombre = nombre
         self.apellidos = apellidos
         self.facultad = facultad
         self.id = id
-        self.contraseña = contraseña
+        self.contrasena = contrasena
 
     def seleccionar_gestion(self):
         pass
@@ -20,12 +20,12 @@ class Gestion:
     def __init__(self):
         self.estudiantes = dict[str: Estudiante] = {}
 
-    def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contraseña: str):
+    def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
 
         if self.registrado(id) is None:
-            estudiante = Estudiante(nombre, apellidos, facultad, id, contraseña)
+            estudiante = Estudiante(nombre, apellidos, facultad, id, contrasena)
             self.estudiantes[id] = estudiante
-            self.agregar_estudiante(nombre, apellidos, facultad, id, contraseña)
+            self.agregar_estudiante(nombre, apellidos, facultad, id, contrasena)
 
             #else:
             #raise CuentaExistenteError("esta cuenta ya esta registrada")
@@ -36,9 +36,9 @@ class Gestion:
         else:
             return None
 
-    def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contraseña: str):
+    def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
         with open ("archivos/usuarios", encoding="utf8", mode="a") as file:
-            file.write(f"{nombre}-{apellidos}-{facultad}-{id}-{contraseña}")
+            file.write(f"{nombre}-{apellidos}-{facultad}-{id}-{contrasena}")
 
 
 class Producto:
