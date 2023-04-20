@@ -11,7 +11,7 @@ class Ventana_principal(QMainWindow):
         self.__botones()
         self.registro = Registro()
         self.gestion = Gestion()
-        self.registro.registros.append(self.gestion)
+
 
     def __botones(self):
         self.Registrar_Button.clicked.connect(self.abrir_registro)
@@ -19,11 +19,20 @@ class Ventana_principal(QMainWindow):
     def abrir_registro(self):
         self.registro.exec()
 
-    def iniciar_sesion(self):
-        pass
-
     def abrir_seleccion(self):
-        pass
+
+        try:
+            id = self.ingresar_id.text()
+            contrasena = self.ingresar_contrasena.text()
+            self.gestion.iniciar_sesion_estudiante(id, contrasena)
+
+        except EspaciosSinRellenar as err:
+            mensaje_ventana = QMessageBox(self)
+            mensaje_ventana.setWindowTitle("Error")
+            mensaje_ventana.setIcon(QMessageBox.Warning)
+            mensaje_ventana.setText(err.mensaje)
+            mensaje_ventana.setStandardButtons(QMessageBox.Ok)
+            mensaje_ventana.exec()
 
     def abrir_papeleria(self):
         pass
@@ -38,7 +47,6 @@ class Registro(QDialog):
     def __init__(self):
         QDialog.__init__(self)
         uic.loadUi("gui/ventana_registrarse.ui", self)
-        self.registros = []
         self.__botones()
 
     def __botones(self):
@@ -47,13 +55,15 @@ class Registro(QDialog):
     def registro_ventana(self):
 
         try:
-            if self.lineEdit_Nombre.text() != "" and self.self.lineEdit_Apellidos.text() != "" and self.lineEdit_facultad.text() != "" and self.lineEdit_id.text() != "" and self.lineEdit_contrasena.text() != "":
+            if self.lineEdit_Nombre.text() != "" :
                 nombre = self.lineEdit_Nombre.text()
                 apellidos = self.lineEdit_Apellidos.text()
                 facultad = self.lineEdit_facultad.text()
                 id = self.lineEdit_id.text()
                 contrasena = self.lineEdit_contrasena.text()
-                self.lista.registrar_estudiante(nombre, apellidos, facultad, id, contrasena)
+
+                gestion = Gestion()
+                gestion.agregar_estudiante(nombre, apellidos, facultad, id,contrasena)
 
                 mensaje = QMessageBox(self)
                 mensaje.setWindowTitle("")

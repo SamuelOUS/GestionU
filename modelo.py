@@ -20,6 +20,7 @@ class Estudiante:
 class Gestion:
     def __init__(self):
         self.estudiantes = dict[str: Estudiante]
+        self.nuevo_usuario: Estudiante = Estudiante("","","","","")
         self.cargar_estudiante()
 
     def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
@@ -41,7 +42,7 @@ class Gestion:
 
     def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
         with open("archivos/usuarios.txt", encoding="utf8", mode="a") as file:
-            file.write(f"{nombre}-{apellidos}-{facultad}-{id}-{contrasena}")
+            file.write(f"{nombre}-{apellidos}-{facultad}-{id}-{contrasena}\n")
 
     def cargar_estudiante(self):
         with open("archivos/usuarios.txt", encoding="utf8") as file:
@@ -49,6 +50,19 @@ class Gestion:
             estudiantes = map(lambda data: Estudiante(data[0], data[1], data[2], data[3], data[4]), datos)
             self.estudiantes = {estudiante.id: estudiante for estudiante in estudiantes}
 
+    def iniciar_sesion_estudiante(self, id: int, contrasena: str):
+
+        if id == "" or contrasena == "":
+            raise EspaciosSinRellenar("debe lllenar todos los espacios")
+        if id in self.estudiantes.keys():
+            estudiante = self.estudiantes[id]
+        else:
+            raise CuentaNoExistenteError("esta cuenta no esta registrada")
+        if estudiante.contrasena == contrasena:
+            self.nuevo_usuario = estudiante
+
+        else:
+            raise ContrasenaInvalida("la contraseña no es correcta")
 
 
 class Producto:
