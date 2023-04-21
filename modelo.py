@@ -17,10 +17,9 @@ class Estudiante:
 class Gestion:
     def __init__(self):
         self.estudiantes = dict[str: Estudiante]
-        self.nuevo_usuario: Estudiante = Estudiante("","","","","")
-        self.cargar_estudiante()
+        self.nuevo_usuario: Estudiante = Estudiante("","","", Optional[None],"")
 
-    def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
+    def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int , contrasena: str):
 
         if self.registrado(id) is None:
             estudiante = Estudiante(nombre, apellidos, facultad, id, contrasena)
@@ -37,30 +36,41 @@ class Gestion:
             return None
 
     def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
-        with open("archivos/usuarios.txt", encoding="utf8", mode="a") as file:
-            file.write(f"{nombre}-{apellidos}-{facultad}-{id}-{contrasena}"
-                       f"\n")
+        with open("./archivos/usuarios.txt", encoding="utf8", mode="a") as file:
+            file.write(f"{nombre},{apellidos},{facultad},{id},{contrasena}'\n'")
 
-    def cargar_estudiante(self):
-        with open("archivos/usuarios.txt", encoding="utf8") as file:
-            datos = csv.reader(file, delimiter="-")
-            estudiantes = map(lambda data: Estudiante(data[0], data[1], data[2], data[3], data[4]), datos)
-            self.estudiantes = {estudiante.id: estudiante for estudiante in estudiantes}
+    def estaRegistrado(self, id:int):
+        datos = self.consultarTodosLosEstudiantes()
+        esUsuarioRegistrado = False
+        for row in datos:
+            print(row)
+            if(row[3] == id):
+                esUsuarioRegistrado = True
+        return esUsuarioRegistrado
 
-    def iniciar_sesion_estudiante(self, id: int, contrasena: str):
+    def iniciar_sesion_estudiante(self, id: int, contrasena: str) -> bool:
+        esUsuarioRegistrado = self.estaRegistrado(id)
+        if(esUsuarioRegistrado):
+            estudiante = self.consultarEstudiantePorId(id)
+            return estudiante and estudiante.id == id and estudiante.contrasena == contrasena
 
-        if id == "" or contrasena == "":
-            raise EspaciosSinRellenar("debe lllenar todos los espacios")
+        pass
 
-        if id in self.estudiantes.keys():
-            estudiante = self.estudiantes[id]
-        else:
-            raise CuentaNoExistenteError("esta cuenta no esta registrada")
-        if estudiante.contrasena == contrasena:
-            self.nuevo_usuario = estudiante
+    def consultarEstudiantePorId(self, id:int) -> Optional[Estudiante]:
+        datos = self.consultarTodosLosEstudiantes()
+        for row in datos:
+            if(row[3] == id):
+                nombre = row[0]
+                apellidos = row[1]
+                facultad = row[2]
+                id = row[3]
+                password = row[4]
+                return Estudiante(nombre,apellidos,facultad,id,password)
+        return None
 
-        else:
-            raise ContrasenaInvalida("la contraseña no es correcta")
+    def consultarTodosLosEstudiantes(self):
+        with open('./archivos/usuarios.txt', encoding='utf8') as file:
+            return csv.reader(file, delimiter=",")
 
 
 class Producto:
@@ -111,8 +121,6 @@ class Clima:
     def ingresar_localidad(self):
         pass
 
-    def mostrar_clima(self):
-        pass
 
 
 
