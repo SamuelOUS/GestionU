@@ -12,14 +12,18 @@ class Ventana_principal(QMainWindow):
         self.registro = Registro()
         self.gestion = Gestion()
 
+    def __clear(self):
+        self.ingresar_id.clear()
+        self.ingresar_contrasena.clear()
 
     def __botones(self):
         self.Registrar_Button.clicked.connect(self.abrir_registro)
+        self.Iniciar_Button.clicked.connect(self.iniciar_sesion)
 
     def abrir_registro(self):
         self.registro.exec()
 
-    def abrir_seleccion(self):
+    def iniciar_sesion(self):
 
         try:
             id = self.ingresar_id.text()
@@ -33,6 +37,29 @@ class Ventana_principal(QMainWindow):
             mensaje_ventana.setText(err.mensaje)
             mensaje_ventana.setStandardButtons(QMessageBox.Ok)
             mensaje_ventana.exec()
+
+        except CuentaNoExistenteError as err:
+
+            mensaje_ventana = QMessageBox(self)
+            mensaje_ventana.setWindowTitle("Error")
+            mensaje_ventana.setIcon(QMessageBox.Critical)
+            mensaje_ventana.setText(err.mensaje)
+            mensaje_ventana.setStandardButtons(QMessageBox.Ok)
+            mensaje_ventana.exec()
+            self.__limpiar()
+
+        except ContrasenaInvalida as err:
+
+            mensaje_ventana = QMessageBox(self)
+            mensaje_ventana.setWindowTitle("Error")
+            mensaje_ventana.setIcon(QMessageBox.Warning)
+            mensaje_ventana.setText(err.mensaje)
+            mensaje_ventana.setStandardButtons(QMessageBox.Ok)
+            mensaje_ventana.exec()
+            self.Txt_clave.clear()
+
+        else:
+            #abrir ventana seleccion
 
     def abrir_papeleria(self):
         pass
@@ -48,14 +75,22 @@ class Registro(QDialog):
         QDialog.__init__(self)
         uic.loadUi("gui/ventana_registrarse.ui", self)
         self.__botones()
+        self.__clear()
 
     def __botones(self):
         self.Boton_registrar.accepted.connect(self.registro_ventana)
 
+    def __clear(self):
+        self.lineEdit_Nombre.clear()
+        self.lineEdit_Apellidos.clear()
+        self.lineEdit_facultad.clear()
+        self.lineEdit_id.clear()
+        self.lineEdit_contrasena.clear()
+
     def registro_ventana(self):
 
         try:
-            if self.lineEdit_Nombre.text() != "" :
+            if self.lineEdit_Nombre.text() != "" and self.lineEdit_Apellidos.text() != "" and self.lineEdit_facultad.text() != "" and self.lineEdit_id.text() != "" and self.lineEdit_contrasena.text() != "":
                 nombre = self.lineEdit_Nombre.text()
                 apellidos = self.lineEdit_Apellidos.text()
                 facultad = self.lineEdit_facultad.text()
@@ -66,20 +101,26 @@ class Registro(QDialog):
                 gestion.agregar_estudiante(nombre, apellidos, facultad, id,contrasena)
 
                 mensaje = QMessageBox(self)
-                mensaje.setWindowTitle("")
+                mensaje.setWindowTitle("NOTIFICACIÓN")
                 mensaje.setText("Registrado con exito")
                 mensaje.setStandardButtons(QMessageBox.Ok)
                 mensaje.exec()
+                self.__clear()
+
 
             else:
                 mensaje = QMessageBox(self)
-                mensaje.setWindowTitle("Debes rellenar todos los campos para finalizar el registro")
+                mensaje.setWindowTitle("AVISO")
+                mensaje.setText("Debes rellenar todos los campos para finalizar el registro")
                 mensaje.setIcon(QMessageBox.Warning)
                 mensaje.setStandardButtons(QMessageBox.Ok)
                 mensaje.exec()
 
 
         except CuentaExistenteError as err:
+
+            #gestion = Gestion()
+            #gestion.registrado(id)
 
             mensaje= QMessageBox(self)
             mensaje.setWindowTitle("La cuenta ya existe")

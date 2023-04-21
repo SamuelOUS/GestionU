@@ -11,9 +11,6 @@ class Estudiante:
         self.id = id
         self.contrasena = contrasena
 
-    def seleccionar_gestion(self):
-        pass
-
     def seleccionar_producto(self):
         pass
 
@@ -33,7 +30,6 @@ class Gestion:
         else:
             raise CuentaExistenteError("Esta cuenta está registrada")
 
-
     def registrado(self, id: int) -> Optional[Estudiante]:
         if id in self.estudiantes.keys():
             return self.estudiantes[id]
@@ -42,7 +38,8 @@ class Gestion:
 
     def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
         with open("archivos/usuarios.txt", encoding="utf8", mode="a") as file:
-            file.write(f"{nombre}-{apellidos}-{facultad}-{id}-{contrasena}\n")
+            file.write(f"{nombre}-{apellidos}-{facultad}-{id}-{contrasena}"
+                       f"\n")
 
     def cargar_estudiante(self):
         with open("archivos/usuarios.txt", encoding="utf8") as file:
@@ -101,9 +98,6 @@ class Calendario:
         self.año= año
 
     def crear_evento(self):
-        pass
-
-    def agregar_evento(self):
         pass
 
     def eliminar_evento(self):
