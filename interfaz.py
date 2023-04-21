@@ -19,7 +19,6 @@ class Ventana_principal(QMainWindow):
 
     def __botones(self):
         self.Registrar_Button.clicked.connect(self.abrir_registro)
-        self.Iniciar_Button.clicked.connect(self.iniciar_sesion)
 
     def abrir_registro(self):
         self.registro.exec()
@@ -35,7 +34,6 @@ class Registro(QDialog):
         self.__clear()
 
     def __botones(self):
-
         self.Boton_registrar.accepted.connect(self.registro_ventana)
 
     def __clear(self):
