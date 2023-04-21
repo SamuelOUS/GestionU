@@ -51,6 +51,7 @@ class Gestion:
 
         if id == "" or contrasena == "":
             raise EspaciosSinRellenar("debe lllenar todos los espacios")
+
         if id in self.estudiantes.keys():
             estudiante = self.estudiantes[id]
         else:
@@ -100,7 +101,7 @@ class Calendario:
     def crear_evento(self):
         pass
 
-    def eliminar_evento(self):
+    def eliminar(self):
         pass
 
 class Clima:

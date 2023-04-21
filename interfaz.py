@@ -10,7 +10,7 @@ class Ventana_principal(QMainWindow):
         uic.loadUi("gui/ventana_principal.ui", self)
         self.__botones()
         self.registro = Registro()
-        self.gestion = Gestion()
+        self.seleccion = Seleccion()
 
     def __clear(self):
         self.ingresar_id.clear()
@@ -26,27 +26,23 @@ class Ventana_principal(QMainWindow):
     def iniciar_sesion(self):
 
         try:
-            id = self.ingresar_id.text()
-            contrasena = self.ingresar_contrasena.text()
-            self.gestion.iniciar_sesion_estudiante(id, contrasena)
+            if self.ingresar_id.text() == "" and self.ingresar_contrasena.text() == "":
 
-        except EspaciosSinRellenar as err:
-            mensaje_ventana = QMessageBox(self)
-            mensaje_ventana.setWindowTitle("Error")
-            mensaje_ventana.setIcon(QMessageBox.Warning)
-            mensaje_ventana.setText(err.mensaje)
-            mensaje_ventana.setStandardButtons(QMessageBox.Ok)
-            mensaje_ventana.exec()
+                mensaje = QMessageBox(self)
+                mensaje.setWindowTitle("AVISO")
+                mensaje.setText("Debes rellenar todos los campos para iniciar sesión")
+                mensaje.setIcon(QMessageBox.Warning)
+                mensaje.setStandardButtons(QMessageBox.Ok)
+                mensaje.exec()
+            else:
+                id = self.ingresar_id.text()
+                contrasena = self.ingresar_contrasena.text()
 
-        except CuentaNoExistenteError as err:
+                gestion = Gestion()
+                self.gestion.iniciar_sesion_estudiante(id, contrasena)
+                self.seleccion.exec()
+                self.__clear()
 
-            mensaje_ventana = QMessageBox(self)
-            mensaje_ventana.setWindowTitle("Error")
-            mensaje_ventana.setIcon(QMessageBox.Critical)
-            mensaje_ventana.setText(err.mensaje)
-            mensaje_ventana.setStandardButtons(QMessageBox.Ok)
-            mensaje_ventana.exec()
-            self.__limpiar()
 
         except ContrasenaInvalida as err:
 
@@ -57,9 +53,6 @@ class Ventana_principal(QMainWindow):
             mensaje_ventana.setStandardButtons(QMessageBox.Ok)
             mensaje_ventana.exec()
             self.Txt_clave.clear()
-
-        else:
-            #abrir ventana seleccion
 
     def abrir_papeleria(self):
         pass
@@ -119,15 +112,17 @@ class Registro(QDialog):
 
         except CuentaExistenteError as err:
 
-            #gestion = Gestion()
-            #gestion.registrado(id)
-
             mensaje= QMessageBox(self)
             mensaje.setWindowTitle("La cuenta ya existe")
             mensaje.setIcon(QMessageBox.Warning)
             mensaje.setText(err.mensaje)
             mensaje.setStandardButtons(QMessageBox.Ok)
             mensaje.exec()
+
+class Seleccion(QDialog):
+    def __init__(self):
+        QDialog.__init__(self)
+        uic.loadUi("gui/ventana_seleccion.ui", self)
 
 
 class Papeleria(QDialog):
