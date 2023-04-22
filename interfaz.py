@@ -1,9 +1,8 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QDialog, QMessageBox, QWidget
 from modelo import *
 from excepciones import *
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
-
 
 class Ventana_principal(QMainWindow):
     def __init__(self):
@@ -54,6 +53,7 @@ class Registro(QDialog):
 
                 gestion = Gestion()
                 print("-------------------")
+                gestion.registrar_estudiante(nombre,apellidos,facultad,id,contrasena)
                 gestion.agregar_estudiante(nombre, apellidos, facultad, id, contrasena)
 
                 mensaje_registro = QMessageBox(self)
@@ -80,28 +80,39 @@ class Registro(QDialog):
             mensaje.exec()
 
 
-class Seleccion(QDialog):
+class Seleccion(QMainWindow):
     def __init__(self):
-        QDialog.__init__(self)
-        uic.loadUi("gui/ventana_seleccion.ui", self)
+        QMainWindow.__init__(self)
+        uic.loadUi("gui/ventana_seleccion2.ui", self)
+        self.principal = Ventana_principal
+        self.seleccion = Seleccion
+        self.calendario = Calendar
+        self.__botones()
+
+    def __botones(self):
+        self.Cerrar_Button.clicked.connect(self.cerrar_sesion)
+        self.Calendario_Button.clicked.connect(self.abrir_calendario)
+
+    def cerrar_sesion(self):
+        pass
+
 
     def abrir_papeleria(self):
         pass
 
+
     def abrir_calendario(self):
-        pass
+        self.calendario.show()
+
 
     def abrir_clima(self):
         pass
 
 
-class Papeleria(QDialog):
-    pass
+class Calendar(QWidget):
+    def __init__(self):
+        super(Calendar, self).__init__()
+        uic.loadUi("gui/calendario.ui", self)
 
 
-class Calendario(QDialog):
-    pass
 
-
-class Clima(QDialog):
-    pass

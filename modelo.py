@@ -21,7 +21,7 @@ class Gestion:
 
     def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int , contrasena: str):
 
-        if self.registrado(id) is None:
+        if self.estaRegistrado(id) is None:
             estudiante = Estudiante(nombre, apellidos, facultad, id, contrasena)
             self.estudiantes[id] = estudiante
             self.agregar_estudiante(nombre, apellidos, facultad, id, contrasena)
@@ -29,32 +29,25 @@ class Gestion:
         else:
             raise CuentaExistenteError("Esta cuenta está registrada")
 
-    def registrado(self, id: int) -> Optional[Estudiante]:
-        if id in self.estudiantes.keys():
-            return self.estudiantes[id]
-        else:
-            return None
-
     def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
         with open("./archivos/usuarios.txt", encoding="utf8", mode="a") as file:
             file.write(f"{nombre},{apellidos},{facultad},{id},{contrasena}'\n'")
 
     def estaRegistrado(self, id:int):
-        datos = self.consultarTodosLosEstudiantes()
+        estudiantes = open("./archivos/usuarios.txt", "r")
+        leer = csv.reader(estudiantes)
         esUsuarioRegistrado = False
-        for row in datos:
-            print(row)
-            if(row[3] == id):
+        for row in leer:
+            if (row[3] == id):
                 esUsuarioRegistrado = True
-        return esUsuarioRegistrado
+            return esUsuarioRegistrado
+        estudiantes.close()
 
     def iniciar_sesion_estudiante(self, id: int, contrasena: str) -> bool:
         esUsuarioRegistrado = self.estaRegistrado(id)
         if(esUsuarioRegistrado):
             estudiante = self.consultarEstudiantePorId(id)
             return estudiante and estudiante.id == id and estudiante.contrasena == contrasena
-
-        pass
 
     def consultarEstudiantePorId(self, id:int) -> Optional[Estudiante]:
         datos = self.consultarTodosLosEstudiantes()
