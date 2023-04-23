@@ -4,7 +4,7 @@ from excepciones import *
 
 
 class Estudiante:
-    def __init__(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
+    def __init__(self, nombre: str, apellidos: str, facultad: str, id: str, contrasena: str):
         self.nombre = nombre
         self.apellidos = apellidos
         self.facultad = facultad
@@ -16,19 +16,21 @@ class Estudiante:
 
 class Gestion:
     def __init__(self):
-        self.estudiantes = dict[str: Estudiante]
-        self.nuevo_usuario: Estudiante = Estudiante("","","", Optional[None],"")
+        self.estudiantes = {}
+        self.nuevo_usuario: Estudiante = Estudiante("","","","","")
 
-    def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int , contrasena: str):
+    def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: str , contrasena: str):
 
-        if self.estaRegistrado(id) is None:
+        if self.estaRegistrado(id) is False:
             estudiante = Estudiante(nombre, apellidos, facultad, id, contrasena)
             self.estudiantes[id] = estudiante
             self.agregar_estudiante(nombre, apellidos, facultad, id, contrasena)
         else:
             raise CuentaExistenteError("Esta cuenta está registrada")
 
-    def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: int, contrasena: str):
+    def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: str, contrasena: str):
+        estudiante = Estudiante(nombre, apellidos, facultad, id, contrasena)
+        self.estudiantes[id] = estudiante
         with open("./archivos/usuarios.txt", encoding="utf8", mode="a") as file:
             file.write(f"{nombre},{apellidos},{facultad},{id},{contrasena}'\n'")
 
@@ -36,16 +38,16 @@ class Gestion:
         with open('./archivos/usuarios.txt', encoding='utf8') as file:
             return csv.reader(file, delimiter=",")
 
-    def estaRegistrado(self, id:int):
-        leer = self.consultarTodosLosEstudiantes()
+    def estaRegistrado(self, id: str):
+        with open("./archivos/usuarios.txt", "r") as archivo:
+            lineas = archivo.readlines()
         esUsuarioRegistrado = False
-        for row in leer:
-            if (row[3] == id):
+        for linea in lineas:
+            campos = linea.split(',')
+            if len(campos) >= 4 and campos[3] == str(id):
                 esUsuarioRegistrado = True
-                return esUsuarioRegistrado
-            else:
-                esUsuarioRegistrado
-        leer.close()
+                break
+        return esUsuarioRegistrado
 
 class Producto:
     def __init__(self, nombre: str, precio: float):
