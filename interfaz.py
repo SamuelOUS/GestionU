@@ -53,7 +53,7 @@ class Registro(QDialog):
 
                 gestion = Gestion()
                 print("-------------------")
-
+                gestion.registrar_estudiante(nombre,apellidos, facultad, id, contrasena)
                 gestion.agregar_estudiante(nombre, apellidos, facultad, id, contrasena)
 
                 mensaje_registro = QMessageBox(self)
