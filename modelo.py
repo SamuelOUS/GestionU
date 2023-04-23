@@ -25,7 +25,6 @@ class Gestion:
             estudiante = Estudiante(nombre, apellidos, facultad, id, contrasena)
             self.estudiantes[id] = estudiante
             self.agregar_estudiante(nombre, apellidos, facultad, id, contrasena)
-
         else:
             raise CuentaExistenteError("Esta cuenta está registrada")
 
@@ -38,17 +37,15 @@ class Gestion:
             return csv.reader(file, delimiter=",")
 
     def estaRegistrado(self, id:int):
-        estudiantes = open("./archivos/usuarios.txt")
-        leer = csv.reader(estudiantes)
+        leer = self.consultarTodosLosEstudiantes()
         esUsuarioRegistrado = False
         for row in leer:
             if (row[3] == id):
                 esUsuarioRegistrado = True
                 return esUsuarioRegistrado
             else:
-                raise CuentaExistenteError("La cuenta ya existe")
-        estudiantes.close()
-
+                esUsuarioRegistrado
+        leer.close()
 
 class Producto:
     def __init__(self, nombre: str, precio: float):
