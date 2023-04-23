@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1011</width>
+    <height>694</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:0.01, y1:0.210227, x2:0.746, y2:0.727955, stop:0.109453 rgba(255, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
+  </property>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

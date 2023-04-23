@@ -49,6 +49,17 @@ class Gestion:
                 break
         return esUsuarioRegistrado
 
+    def iniciar_sesion(self, id: str, contrasena: str):
+        if id == "" or contrasena == "":
+            raise EspaciosSinRellenar("debe lllenar todos los datos del ingreso")
+
+        if self.estaRegistrado(id) == False:
+            raise CuentaNoExiste("esta cuenta no esta registrada")
+
+
+            #raise ContrasenaIncorrecta("la contraseña no es correcta")
+
+
 class Producto:
     def __init__(self, nombre: str, precio: float):
         self.nombre = nombre
