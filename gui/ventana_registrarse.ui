@@ -10,8 +10,17 @@
     <height>716</height>
    </rect>
   </property>
+  <property name="font">
+   <font>
+    <weight>50</weight>
+    <italic>false</italic>
+    <bold>false</bold>
+    <underline>false</underline>
+    <strikeout>false</strikeout>
+   </font>
+  </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>REGISTRAR</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 0, 0);
@@ -43,7 +52,8 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 11pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
    <property name="text">
     <string/>
@@ -91,7 +101,8 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 11pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
    <property name="text">
     <string/>
@@ -123,7 +134,8 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 11pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
    <property name="text">
     <string/>
@@ -155,7 +167,8 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 11pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
    <property name="text">
     <string/>
@@ -187,10 +200,14 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 75 11pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
    </property>
   </widget>
   <widget class="QDialogButtonBox" name="Boton_registrar">
