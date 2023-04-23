@@ -85,13 +85,10 @@ class Seleccion(QMainWindow):
         QMainWindow.__init__(self)
         uic.loadUi("gui/ventana_seleccion2.ui", self)
         self.principal = Ventana_principal
-        self.seleccion = Seleccion
-        self.calendario = Calendar
         self.__botones()
 
     def __botones(self):
         self.Cerrar_Button.clicked.connect(self.cerrar_sesion)
-        self.Calendario_Button.clicked.connect(self.abrir_calendario)
 
     def cerrar_sesion(self):
         pass
@@ -109,10 +106,6 @@ class Seleccion(QMainWindow):
         pass
 
 
-class Calendar(QWidget):
-    def __init__(self):
-        super(Calendar, self).__init__()
-        uic.loadUi("gui/calendario.ui", self)
 
 
 

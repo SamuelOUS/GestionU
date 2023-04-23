@@ -33,37 +33,21 @@ class Gestion:
         with open("./archivos/usuarios.txt", encoding="utf8", mode="a") as file:
             file.write(f"{nombre},{apellidos},{facultad},{id},{contrasena}'\n'")
 
+    def consultarTodosLosEstudiantes(self):
+        with open('./archivos/usuarios.txt', encoding='utf8') as file:
+            return csv.reader(file, delimiter=",")
+
     def estaRegistrado(self, id:int):
-        estudiantes = open("./archivos/usuarios.txt", "r")
+        estudiantes = open("./archivos/usuarios.txt")
         leer = csv.reader(estudiantes)
         esUsuarioRegistrado = False
         for row in leer:
             if (row[3] == id):
                 esUsuarioRegistrado = True
-            return esUsuarioRegistrado
+                return esUsuarioRegistrado
+            else:
+                raise CuentaExistenteError("La cuenta ya existe")
         estudiantes.close()
-
-    def iniciar_sesion_estudiante(self, id: int, contrasena: str) -> bool:
-        esUsuarioRegistrado = self.estaRegistrado(id)
-        if(esUsuarioRegistrado):
-            estudiante = self.consultarEstudiantePorId(id)
-            return estudiante and estudiante.id == id and estudiante.contrasena == contrasena
-
-    def consultarEstudiantePorId(self, id:int) -> Optional[Estudiante]:
-        datos = self.consultarTodosLosEstudiantes()
-        for row in datos:
-            if(row[3] == id):
-                nombre = row[0]
-                apellidos = row[1]
-                facultad = row[2]
-                id = row[3]
-                password = row[4]
-                return Estudiante(nombre,apellidos,facultad,id,password)
-        return None
-
-    def consultarTodosLosEstudiantes(self):
-        with open('./archivos/usuarios.txt', encoding='utf8') as file:
-            return csv.reader(file, delimiter=",")
 
 
 class Producto:

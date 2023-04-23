@@ -8,3 +8,5 @@ if __name__ == '__main__':
     inicio = Ventana_principal()
     inicio.show()
     sys.exit(app.exec())
+
+
