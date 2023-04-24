@@ -31,6 +31,7 @@ class Ventana_principal(QMainWindow):
             estudiante = self.ingresar_id.text()
             contrasena = self.ingresar_contrasena.text()
             self.gestion.iniciar_sesion(estudiante, contrasena)
+            self.__clear()
 
 
         except EspaciosSinRellenar as err:
