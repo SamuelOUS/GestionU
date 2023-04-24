@@ -33,15 +33,15 @@ class Gestion:
         self.estudiantes[id] = estudiante
         self.estudiantes[contrasena] = estudiante
         with open("./archivos/usuarios.txt", encoding="utf8", mode="a") as file:
-            file.write(f"{nombre},{apellidos},{facultad},{id},{contrasena},\n")
+            file.write(f"{nombre},{apellidos},{facultad},{id},{contrasena}\n")
 
     def consultarTodosLosEstudiantes(self):
         with open('./archivos/usuarios.txt', encoding='utf8') as file:
-            return csv.reader(file, delimiter=",")
+            return csv.reader(file, delimiter="-")
 
     def estaRegistrado(self, id: str):
-        with open("./archivos/usuarios.txt", "r") as archivo:
-            lineas = archivo.readlines()
+        with open("./archivos/usuarios.txt", "r") as file:
+            lineas = file.readlines()
         esUsuarioRegistrado = False
         for linea in lineas:
             campos = linea.split(',')
@@ -59,22 +59,19 @@ class Gestion:
 
         if self.contrasena_correcta(contrasena) == False:
             raise ContrasenaIncorrecta("la contraseña no es correcta")
+        else:
+            return True
 
     def contrasena_correcta(self, contrasena: str):
-        with open("./archivos/usuarios.txt", "r") as archivo:
-            lineas = archivo.readlines()
-            print("1")
-        correct_password = False
-        print("2")
+        with open("./archivos/usuarios.txt", "r") as file:
+            lineas = file.readlines()
+        contrasena_correcta = False
         for linea in lineas:
-            campos = linea.split(',')
-            print("3")
-            if len(campos) >= 4 and campos[4] == str(contrasena):
-                print("4")
-                correct_password = True
-            break
-            print("5")
-        return correct_password
+            campos = linea.strip().split(',')
+            if len(campos) > 4 and campos[4] == str(contrasena):
+                contrasena_correcta = True
+                break
+        return contrasena_correcta
 
 class Producto:
     def __init__(self, nombre: str, precio: float):
