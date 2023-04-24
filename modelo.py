@@ -31,8 +31,9 @@ class Gestion:
     def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: str, contrasena: str):
         estudiante = Estudiante(nombre, apellidos, facultad, id, contrasena)
         self.estudiantes[id] = estudiante
+        self.estudiantes[contrasena] = estudiante
         with open("./archivos/usuarios.txt", encoding="utf8", mode="a") as file:
-            file.write(f"{nombre},{apellidos},{facultad},{id},{contrasena}'\n'")
+            file.write(f"{nombre},{apellidos},{facultad},{id},{contrasena},\n")
 
     def consultarTodosLosEstudiantes(self):
         with open('./archivos/usuarios.txt', encoding='utf8') as file:
@@ -56,9 +57,24 @@ class Gestion:
         if self.estaRegistrado(id) == False:
             raise CuentaNoExiste("esta cuenta no esta registrada")
 
+        if self.contrasena_correcta(contrasena) == False:
+            raise ContrasenaIncorrecta("la contraseña no es correcta")
 
-            #raise ContrasenaIncorrecta("la contraseña no es correcta")
-
+    def contrasena_correcta(self, contrasena: str):
+        with open("./archivos/usuarios.txt", "r") as archivo:
+            lineas = archivo.readlines()
+            print("1")
+        correct_password = False
+        print("2")
+        for linea in lineas:
+            campos = linea.split(',')
+            print("3")
+            if len(campos) >= 4 and campos[4] == str(contrasena):
+                print("4")
+                correct_password = True
+            break
+            print("5")
+        return correct_password
 
 class Producto:
     def __init__(self, nombre: str, precio: float):
