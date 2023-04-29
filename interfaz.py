@@ -36,7 +36,7 @@ class Ventana_principal(QMainWindow):
 
         except EspaciosSinRellenar as err:
             mensaje_ventana = QMessageBox(self)
-            mensaje_ventana.setWindowTitle("Error")
+            mensaje_ventana.setWindowTitle("ERROR")
             mensaje_ventana.setIcon(QMessageBox.Warning)
             mensaje_ventana.setText(err.mensaje)
             mensaje_ventana.setStandardButtons(QMessageBox.Ok)
@@ -44,7 +44,7 @@ class Ventana_principal(QMainWindow):
 
         except CuentaNoExiste as err:
             mensaje_ventana = QMessageBox(self)
-            mensaje_ventana.setWindowTitle("Error")
+            mensaje_ventana.setWindowTitle("ERROR")
             mensaje_ventana.setIcon(QMessageBox.Warning)
             mensaje_ventana.setText(err.mensaje)
             mensaje_ventana.setStandardButtons(QMessageBox.Ok)
@@ -53,11 +53,12 @@ class Ventana_principal(QMainWindow):
         except ContrasenaIncorrecta as err:
 
             mensaje_ventana = QMessageBox(self)
-            mensaje_ventana.setWindowTitle("Error")
+            mensaje_ventana.setWindowTitle("ERROR")
             mensaje_ventana.setIcon(QMessageBox.Warning)
             mensaje_ventana.setText(err.mensaje)
             mensaje_ventana.setStandardButtons(QMessageBox.Ok)
             mensaje_ventana.exec()
+
 
         else:
             self.seleccion.exec()
@@ -111,7 +112,7 @@ class Registro(QDialog):
         except CuentaExistenteError as err:
 
             mensaje = QMessageBox(self)
-            mensaje.setWindowTitle("CUENTA EXISTENTE")
+            mensaje.setWindowTitle("ERROR")
             mensaje.setIcon(QMessageBox.Warning)
             mensaje.setText(err.mensaje)
             mensaje.setStandardButtons(QMessageBox.Ok)
@@ -123,26 +124,31 @@ class Seleccion(QDialog):
     def __init__(self):
         QDialog.__init__(self)
         uic.loadUi("gui/ventana_seleccionar.ui", self)
+        self.papeleria = Papeleria()
 
+        self.__botones()
 
     def __botones(self):
-        pass
+        self.Boton_Papeleria.clicked.connect(self.abrir_papeleria)
+        self.Boton_cerrar.clicked.connect(self.cerrar_sesion)
 
     def cerrar_sesion(self):
-        pass
-
+        self.close()
 
     def abrir_papeleria(self):
-        pass
-
+        self.papeleria.exec()
 
     def abrir_calendario(self):
-        self.calendario.show()
-
+        pass
 
     def abrir_clima(self):
         pass
 
+
+class Papeleria(QDialog):
+    def __init__(self):
+        QDialog.__init__(self)
+        uic.loadUi("gui/papeleria.ui", self)
 
 
 

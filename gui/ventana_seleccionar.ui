@@ -16,6 +16,32 @@
   <property name="styleSheet">
    <string notr="true">background-color: qlineargradient(spread:pad, x1:0.01, y1:0.210227, x2:0.746, y2:0.727955, stop:0.109453 rgba(255, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
   </property>
+  <widget class="QPushButton" name="Boton_Papeleria">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>310</y>
+     <width>301</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PAPELERIA</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Boton_cerrar">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>580</y>
+     <width>151</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cerrar Sesión</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
