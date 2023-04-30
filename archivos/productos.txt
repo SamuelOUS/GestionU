@@ -1,0 +1,8 @@
+Lapiz,2500
+Borrador,2500
+Lapicero,1000
+Portaminas,4000
+Cuaderno,5000
+Corrector,4000
+
+

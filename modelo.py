@@ -11,8 +11,6 @@ class Estudiante:
         self.id = id
         self.contrasena = contrasena
 
-    def seleccionar_producto(self):
-        pass
 
 class Gestion:
     def __init__(self):
@@ -37,7 +35,7 @@ class Gestion:
 
     def consultarTodosLosEstudiantes(self):
         with open('./archivos/usuarios.txt', encoding='utf8') as file:
-            return csv.reader(file, delimiter="-")
+            return csv.reader(file, delimiter=",")
 
     def estaRegistrado(self, id: str):
         with open("./archivos/usuarios.txt", "r") as file:
@@ -81,45 +79,55 @@ class Producto:
     def __str__(self):
         return f"Producto: {self.nombre} ------ Precio: {self.precio}"
 
-class Carrito:
+class Papeleria:
     def __init__(self):
-        self.producto = []
-        self.valor_total= 0
+        self.productos = {}
+        self.__cargar_productos()
+        self.carrito = Carrito()
 
-    def agregar_carrito(self, Producto):
-        pass
+    def __cargar_productos(self):
+        with open("./archivos/productos.txt") as file:
+            csv_data = csv.reader(file, delimiter=",")
+            productos = {}
+            for row in csv_data:
+                if len(row) == 2:
+                    productos[row[0]] = Producto(row[0], row[1])
+            self.productos = productos
 
-    def comprar_producto(self):
-        pass
+    def agregar_producto_carrito(self, producto, cantidad):
+        return self.carrito.agregar_producto(producto, cantidad)
 
-    def calcular_total(self):
-        pass
-
-    def eliminar_producto(self):
-        pass
+    def eliminar_producto(self, nombre):
+        self.carrito.quitar_producto(nombre)
 
     def mostrar_factura(self):
         pass
 
+class Carrito:
+    def __init__(self):
+        self.productos = []
 
-class Calendario:
-    def __init__(self, dia: int, mes: int, año: int):
-        self.dia = dia
-        self.mes = mes
-        self.año= año
+    def agregar_producto(self, producto, cantidad):
+        producto = Item(producto, cantidad)
+        self.productos.append(producto)
+        return producto
 
-    def crear_evento(self):
-        pass
+    def calcular_total(self):
+        total = 0
+        for producto in self.productos:
+            total = total + producto.calcular_subtotal()
+        return total
 
-    def eliminar(self):
-        pass
+    def quitar_producto(self, nombre):
+        self.productos = [producto for producto in self.productos if producto.nombre != nombre]
 
-class Clima:
-    def __init__(self, ubicacion: str):
-        self.ubicacion = ubicacion
+class Item:
+    def __init__(self, producto, cantidad):
+        self.producto = producto
+        self.cantidad = cantidad
 
-    def ingresar_localidad(self):
-        pass
+    def calcular_subtotal(self):
+        return (self.producto.precio) * (self.cantidad)
 
 
 

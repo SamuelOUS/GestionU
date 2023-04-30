@@ -1,5 +1,5 @@
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QDialog, QMessageBox, QWidget
+from PyQt5.QtWidgets import QMainWindow, QDialog, QMessageBox, QWidget, QAbstractItemView, QInputDialog
 from modelo import *
 from excepciones import *
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
@@ -8,6 +8,7 @@ class Ventana_principal(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         uic.loadUi("gui/ventana_principal.ui", self)
+        self.setFixedSize(self.size())
         self.__botones()
         self.registro = Registro()
         self.gestion = Gestion()
@@ -68,6 +69,7 @@ class Registro(QDialog):
     def __init__(self):
         QDialog.__init__(self)
         uic.loadUi("gui/ventana_registrarse.ui", self)
+        self.setFixedSize(self.size())
         self.__botones()
         self.__clear()
 
@@ -124,6 +126,7 @@ class Seleccion(QDialog):
     def __init__(self):
         QDialog.__init__(self)
         uic.loadUi("gui/ventana_seleccionar.ui", self)
+        self.setFixedSize(self.size())
         self.papeleria = Papeleria()
 
         self.__botones()
@@ -145,11 +148,56 @@ class Seleccion(QDialog):
         pass
 
 
-class Papeleria(QDialog):
+class Papeleria_Ventana(QDialog):
     def __init__(self):
         QDialog.__init__(self)
         uic.loadUi("gui/papeleria.ui", self)
+        self.setFixedSize(self.size())
+        self.papeleria = Papeleria()
+        self.__botones()
+        self.__cargar_datos()
 
+    def __botones(self):
 
+        table_model = QStandardItemModel()
+        table_model.setHorizontalHeaderLabels(["PRODUCTO", "CANTIDAD", "TOTAL"])
+        self.tableView_carrito.setModel(table_model)
+        self.tableView_carrito.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.tableView_carrito.setColumnWidth(0,200)
+        self.tableView_carrito.setColumnWidth(1, 100)
+        self.tableView_carrito.setColumnWidth(2, 160)
 
+        self.list_view_productos.setModel(QStandardItemModel())
+
+        self.Boton_agregar_carrito.clicked.connect(self.agregar_producto_carrito)
+
+    def agregar_producto_carrito(self):
+        cantidad , ok = QInputDialog.getInt(self, "Agregar libro a carrito", "Cantidad", 1)
+        if ok:
+            model = self.list_view_productos.model()
+            value = model.itemFromIndex(self.list_view_productos.selectedIndexes()[0])
+            item = self.papeleria.agregar_producto_carrito(value.producto, cantidad)
+            self.agregar_tabla(item)
+            self.actualizar_total()
+
+    def agregar_tabla(self, item):
+        sub_total =item.calcular_subtotal()
+        celda_1 = QStandardItem(item.producto.nombre)
+        celda_2 = QStandardItem(item.cantidad)
+        celda_3 = QStandardItem(sub_total)
+
+        model = self.tableView_carrito.model()
+        model.appendRow([celda_1, celda_2, celda_3])
+
+    def actualizar_total(self):
+        total = self.papeleria.carrito.calcular_total()
+        self.lineEdit_total.setText("${:,,.2f}").format(total)
+
+    def __cargar_datos(self):
+        productos = list(self.papeleria.productos.values())
+        for producto in productos:
+            item = QStandardItem(str(producto))
+            item.producto = producto
+            item.setEditable(False)
+            self.list_view_productos.model().appendRow(item)
 

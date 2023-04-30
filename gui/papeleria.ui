@@ -13,61 +13,151 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QTableView" name="tableView">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>600</x>
-     <y>110</y>
-     <width>401</width>
-     <height>511</height>
+     <x>50</x>
+     <y>40</y>
+     <width>411</width>
+     <height>381</height>
     </rect>
    </property>
+   <property name="title">
+    <string>Productos Disponibles</string>
+   </property>
+   <widget class="QListView" name="list_view_productos">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>361</width>
+      <height>321</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
-  <widget class="QListView" name="listView">
+  <widget class="QGroupBox" name="groupBox_2">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>110</y>
-     <width>441</width>
-     <height>511</height>
+     <x>500</x>
+     <y>40</y>
+     <width>491</width>
+     <height>371</height>
     </rect>
    </property>
+   <property name="title">
+    <string>Carrito de Compras</string>
+   </property>
+   <widget class="QTableView" name="tableView_carrito">
+    <property name="geometry">
+     <rect>
+      <x>15</x>
+      <y>41</y>
+      <width>461</width>
+      <height>271</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>330</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TOTAL: </string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_total">
+    <property name="geometry">
+     <rect>
+      <x>112</x>
+      <y>330</y>
+      <width>271</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
     <rect>
-     <x>650</x>
-     <y>650</y>
-     <width>121</width>
-     <height>41</height>
+     <x>500</x>
+     <y>430</y>
+     <width>491</width>
+     <height>241</height>
     </rect>
    </property>
-   <property name="text">
-    <string>TOTAL </string>
+   <property name="title">
+    <string/>
    </property>
-  </widget>
-  <widget class="QLineEdit" name="lineEdit">
-   <property name="geometry">
-    <rect>
-     <x>710</x>
-     <y>660</y>
-     <width>251</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>50</y>
-     <width>351</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Productos Disponibles </string>
-   </property>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>69</x>
+      <y>29</y>
+      <width>361</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="Boton_agregar_carrito">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>20</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Agregar al Carrito</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Boton_eliminar_carrito">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>70</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Eliminar del Carrito</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="Boton_comprar">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>120</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Comprar</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>
