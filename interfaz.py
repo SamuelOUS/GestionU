@@ -207,7 +207,8 @@ class Papeleria_Ventana(QDialog):
 class Ventana_Calendario(QWidget):
     def __init__(self):
         super(Ventana_Calendario, self).__init__()
-        uic.loadUi("gui/calendario.ui", self)
+        uic.loadUi("gui/calendario_principal.ui", self)
+        self.setFixedSize(self.size())
         self.calendarWidget.selectionChanged.connect(self.cambiar_dia)
         self.cambiar_dia()
         self.saveButton.clicked.connect(self.agregar_evento)
@@ -219,21 +220,24 @@ class Ventana_Calendario(QWidget):
         print("FECHA: ", dateSelected)
 
     def agregar_evento(self):
-        fecha = self.calendarWidget.selectedDate().toPyDate()
 
-        messageBox = QMessageBox()
-        messageBox.setText("AGREGADO A LA AGENDA")
-        messageBox.setStandardButtons(QMessageBox.Ok)
-        messageBox.exec()
+        if self.taskLineEdit.text() == "":
+            messageBox = QMessageBox()
+            messageBox.setText("DEBE RELLENAR PARA AGENDAR")
+            messageBox.setStandardButtons(QMessageBox.Ok)
+            messageBox.exec()
+
+        else:
+            fecha = self.calendarWidget.selectedDate().toPyDate()
+            messageBox = QMessageBox()
+            messageBox.setText("AGREGADO A LA AGENDA")
+            messageBox.setStandardButtons(QMessageBox.Ok)
+            messageBox.exec()
+
 
     def eliminar(self):
         newTask = str(self.taskLineEdit.text())
         date = self.calendarWidget.selectedDate().toPyDate()
-
-        messageBox = QMessageBox()
-        messageBox.setText("EVENTO ELIMINADO DE LA AGENDA")
-        messageBox.setStandardButtons(QMessageBox.Ok)
-        messageBox.exec()
 
         self.taskLineEdit.clear()
 
