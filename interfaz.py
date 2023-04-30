@@ -230,6 +230,11 @@ class Ventana_Calendario(QWidget):
         newTask = str(self.taskLineEdit.text())
         date = self.calendarWidget.selectedDate().toPyDate()
 
+        messageBox = QMessageBox()
+        messageBox.setText("EVENTO ELIMINADO DE LA AGENDA")
+        messageBox.setStandardButtons(QMessageBox.Ok)
+        messageBox.exec()
+
         self.taskLineEdit.clear()
 
 
