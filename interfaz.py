@@ -208,7 +208,6 @@ class Ventana_Calendario(QWidget):
     def __init__(self):
         super(Ventana_Calendario, self).__init__()
         uic.loadUi("gui/calendario_principal.ui", self)
-        self.setFixedSize(self.size())
         self.calendarWidget.selectionChanged.connect(self.cambiar_dia)
         self.cambiar_dia()
         self.saveButton.clicked.connect(self.agregar_evento)
