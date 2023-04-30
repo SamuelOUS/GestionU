@@ -130,6 +130,20 @@ class Item:
         return (self.producto.precio) * (self.cantidad)
 
 
+class Calendario:
+    def __init__(self, dia: int, mes: int, año: int):
+        self.dia = dia
+        self.mes = mes
+        self.año = año
+
+    def __str__(self):
+        return f"Dia: {self.dia} ---Mes: {self.mes}---- Año: {self.año}"
+
+
+
+
+
+
 
 
 

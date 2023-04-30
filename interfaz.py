@@ -208,6 +208,31 @@ class Ventana_Calendario(QWidget):
     def __init__(self):
         super(Ventana_Calendario, self).__init__()
         uic.loadUi("gui/calendario.ui", self)
+        self.calendarWidget.selectionChanged.connect(self.cambiar_dia)
+        self.cambiar_dia()
+        self.saveButton.clicked.connect(self.agregar_evento)
+        self.addButton.clicked.connect(self.eliminar)
+
+    def cambiar_dia(self):
+        print("EL DIA DEL CALENDARIO FUE CAMBIADO")
+        dateSelected = self.calendarWidget.selectedDate().toPyDate()
+        print("FECHA: ", dateSelected)
+
+    def agregar_evento(self):
+        fecha = self.calendarWidget.selectedDate().toPyDate()
+
+        messageBox = QMessageBox()
+        messageBox.setText("AGREGADO A LA AGENDA")
+        messageBox.setStandardButtons(QMessageBox.Ok)
+        messageBox.exec()
+
+    def eliminar(self):
+        newTask = str(self.taskLineEdit.text())
+        date = self.calendarWidget.selectedDate().toPyDate()
+
+        self.taskLineEdit.clear()
+
+
 
 
 
