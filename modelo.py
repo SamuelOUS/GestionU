@@ -1,7 +1,13 @@
 import csv
-from typing import Optional
 from excepciones import *
 
+class Producto:
+    def __init__(self, nombre: str, precio: float):
+        self.nombre: str = nombre
+        self.precio: float = precio
+
+    def __str__(self):
+        return f"Producto: {self.nombre} ------ Precio: {self.precio}"
 
 class Estudiante:
     def __init__(self, nombre: str, apellidos: str, facultad: str, id: str, contrasena: str):
@@ -10,6 +16,13 @@ class Estudiante:
         self.facultad = facultad
         self.id = id
         self.contrasena = contrasena
+        self.carrito = Carrito()
+
+    def agregar_producto(self, producto: Producto, cantidad: int):
+        self.carrito.agregar_item(producto, cantidad)
+
+    def total(self):
+        return self.carrito.total()
 
 
 class Gestion:
@@ -71,19 +84,13 @@ class Gestion:
                 break
         return contrasena_correcta
 
-class Producto:
-    def __init__(self, nombre: str, precio: float):
-        self.nombre = nombre
-        self.precio = precio
-
-    def __str__(self):
-        return f"Producto: {self.nombre} ------ Precio: {self.precio}"
 
 class Papeleria:
     def __init__(self):
         self.productos = {}
         self.__cargar_productos()
         self.carrito = Carrito()
+        self.estudiante_actual: Estudiante = Estudiante("","","","","")
 
     def __cargar_productos(self):
         with open("./archivos/productos.txt") as file:
@@ -94,41 +101,46 @@ class Papeleria:
                     productos[row[0]] = Producto(row[0], row[1])
             self.productos = productos
 
-    def agregar_producto_carrito(self, producto, cantidad):
-        return self.carrito.agregar_producto(producto, cantidad)
+    def agregar_producto_carrito(self, producto, cantidad: int):
+        return self.estudiante_actual.agregar_producto(producto, cantidad)
 
     def eliminar_producto(self, nombre):
-        self.carrito.quitar_producto(nombre)
+        self.carrito.eliminar(nombre)
 
     def mostrar_factura(self):
-        pass
+        return self.carrito.items
+
+    def total(self):
+        total = self.estudiante_actual.total()
+        return total
 
 class Carrito:
     def __init__(self):
-        self.productos = []
+        self.items = []
+        self.valor_total = 0
 
-    def agregar_producto(self, producto, cantidad):
-        producto = Item(producto, cantidad)
-        self.productos.append(producto)
-        return producto
+    def agregar_item(self, producto, cantidad):
+        item = Item(producto, cantidad)
+        self.items.append(item)
+        return item
 
-    def calcular_total(self):
+    def total(self):
         total = 0
-        for producto in self.productos:
-            total = total + producto.calcular_subtotal()
+        for objeto in self.items:
+            total += objeto.cantidad * float(objeto.producto.precio)
         return total
 
-    def quitar_producto(self, nombre):
-        self.productos = [producto for producto in self.productos if producto.nombre != nombre]
+    def eliminar(self, nombre):
+        self.items.pop(nombre)
+
 
 class Item:
     def __init__(self, producto, cantidad):
         self.producto = producto
-        self.cantidad = cantidad
+        self.cantidad: int = cantidad
 
-    def calcular_subtotal(self):
-        return (self.producto.precio) * (self.cantidad)
-
+    def __str__(self):
+        return f"NOMBRE = {self.item}     CANTIDAD = {self.cantidad}"
 
 class Calendario:
     def __init__(self, dia: int, mes: int, año: int):

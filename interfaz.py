@@ -175,26 +175,37 @@ class Papeleria_Ventana(QDialog):
         self.Boton_agregar_carrito.clicked.connect(self.agregar_producto_carrito)
 
     def agregar_producto_carrito(self):
-        cantidad , ok = QInputDialog.getInt(self, "Agregar libro a carrito", "Cantidad", 1)
+        cantidad , ok = QInputDialog.getInt(self, "Agregar producto a carrito", "Cantidad", 1)
+
         if ok:
-            model = self.list_view_productos.model()
-            value = model.itemFromIndex(self.list_view_productos.selectedIndexes()[0])
-            item = self.papeleria.agregar_producto_carrito(value.producto, cantidad)
-            self.agregar_tabla(item)
-            self.actualizar_total()
+            try:
+                model = self.list_view_productos.model()
+                valor = model.itemFromIndex(self.list_view_productos.selectedIndexes()[0])
+                objeto = self.papeleria.agregar_producto_carrito(valor.producto, cantidad)
 
-    def agregar_tabla(self, item):
-        sub_total =item.calcular_subtotal()
-        celda_1 = QStandardItem(item.producto.nombre)
-        celda_2 = QStandardItem(item.cantidad)
-        celda_3 = QStandardItem(sub_total)
+            except IndexError:
+                mensaje_ventana = QMessageBox(self)
+                mensaje_ventana.setWindowTitle("Error")
+                mensaje_ventana.setIcon(QMessageBox.Warning)
+                mensaje_ventana.setText("debe seleccionar un producto")
+                mensaje_ventana.setStandardButtons(QMessageBox.Ok)
+                mensaje_ventana.exec()
 
-        model = self.tableView_carrito.model()
-        model.appendRow([celda_1, celda_2, celda_3])
+            else:
+                total = "${:,.2f}".format(float(valor.producto.precio) * cantidad)
+                celda_1 = QStandardItem(valor.producto.nombre)
+                celda_2 = QStandardItem(str(cantidad))
+                celda_3 = QStandardItem(total)
+                celda_1.item = objeto
 
-    def actualizar_total(self):
-        total = self.papeleria.carrito.calcular_total()
-        self.lineEdit_total.setText("${:,,.2f}").format(total)
+                model = self.tableView_carrito.model()
+                model.appendRow([celda_1, celda_2, celda_3])
+                self.total()
+
+    def total(self):
+        total = self.papeleria.total()
+        self.lineEdit_total.setText("${:,.2f}".format(total))
+
 
     def __cargar_datos(self):
         productos = list(self.papeleria.productos.values())
