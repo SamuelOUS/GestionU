@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>370</x>
-     <y>310</y>
+     <y>260</y>
      <width>301</width>
      <height>81</height>
     </rect>
@@ -40,6 +40,19 @@
    </property>
    <property name="text">
     <string>Cerrar Sesión</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Boton_calendario">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>370</y>
+     <width>301</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>CALENDARIO</string>
    </property>
   </widget>
  </widget>

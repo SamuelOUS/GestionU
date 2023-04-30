@@ -1,5 +1,6 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QDialog, QMessageBox, QWidget, QAbstractItemView, QInputDialog
+from PyQt5.uic import loadUi
 from modelo import *
 from excepciones import *
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
@@ -127,12 +128,14 @@ class Seleccion(QDialog):
         QDialog.__init__(self)
         uic.loadUi("gui/ventana_seleccionar.ui", self)
         self.setFixedSize(self.size())
-        self.papeleria = Papeleria()
+        self.papeleria = Papeleria_Ventana()
+        self.calendario = Ventana_Calendario()
 
         self.__botones()
 
     def __botones(self):
         self.Boton_Papeleria.clicked.connect(self.abrir_papeleria)
+        self.Boton_calendario.clicked.connect(self.abrir_calendario)
         self.Boton_cerrar.clicked.connect(self.cerrar_sesion)
 
     def cerrar_sesion(self):
@@ -142,7 +145,7 @@ class Seleccion(QDialog):
         self.papeleria.exec()
 
     def abrir_calendario(self):
-        pass
+        self.calendario.show()
 
     def abrir_clima(self):
         pass
@@ -200,4 +203,11 @@ class Papeleria_Ventana(QDialog):
             item.producto = producto
             item.setEditable(False)
             self.list_view_productos.model().appendRow(item)
+
+class Ventana_Calendario(QWidget):
+    def __init__(self):
+        super(Ventana_Calendario, self).__init__()
+        uic.loadUi("gui/calendario.ui", self)
+
+
 
