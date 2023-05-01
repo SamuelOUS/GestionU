@@ -21,6 +21,9 @@ class Estudiante:
     def agregar_producto(self, producto: Producto, cantidad: int):
         self.carrito.agregar_item(producto, cantidad)
 
+    def eliminar(self, nombre):
+        self.carrito.eliminar(nombre)
+
     def total(self):
         return self.carrito.total()
 
@@ -105,7 +108,7 @@ class Papeleria:
         return self.estudiante_actual.agregar_producto(producto, cantidad)
 
     def eliminar_producto(self, nombre):
-        self.carrito.eliminar(nombre)
+        self.estudiante_actual.eliminar(nombre)
 
     def mostrar_factura(self):
         return self.carrito.items

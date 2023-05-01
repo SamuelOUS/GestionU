@@ -173,6 +173,7 @@ class Papeleria_Ventana(QDialog):
         self.list_view_productos.setModel(QStandardItemModel())
 
         self.Boton_agregar_carrito.clicked.connect(self.agregar_producto_carrito)
+        self.Boton_eliminar_carrito.clicked.connect(self.eliminar)
 
     def agregar_producto_carrito(self):
         cantidad , ok = QInputDialog.getInt(self, "Agregar producto a carrito", "Cantidad", 1)
@@ -206,6 +207,28 @@ class Papeleria_Ventana(QDialog):
         total = self.papeleria.total()
         self.lineEdit_total.setText("${:,.2f}".format(total))
 
+    def eliminar(self):
+        try:
+            selection_model = self.tableView_carrito.selectionModel()
+            model = self.tableView_carrito.model()
+            row_index = selection_model.selectedIndexes()[0].row()
+            self.papeleria.eliminar_producto(row_index)
+            model.removeRow(row_index)
+            self.total()
+
+        except IndexError:
+            mensaje_ventana = QMessageBox(self)
+            mensaje_ventana.setWindowTitle("Error")
+            mensaje_ventana.setIcon(QMessageBox.Warning)
+            mensaje_ventana.setText("debe seleccionar un item")
+            mensaje_ventana.setStandardButtons(QMessageBox.Ok)
+            mensaje_ventana.exec()
+
+    def vaciar(self):
+
+        modelo = self.tableView_carrito.model()
+        for nombre in self.papeleria.estudiante_actual.carrito.items:
+            modelo.removeRow(0)
 
     def __cargar_datos(self):
         productos = list(self.papeleria.productos.values())
@@ -214,6 +237,10 @@ class Papeleria_Ventana(QDialog):
             item.producto = producto
             item.setEditable(False)
             self.list_view_productos.model().appendRow(item)
+
+
+
+
 
 class Ventana_Calendario(QWidget):
     def __init__(self):
