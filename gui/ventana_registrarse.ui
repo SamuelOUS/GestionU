@@ -20,7 +20,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>REGISTRAR</string>
+   <string>REGISTRO</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 0, 0);

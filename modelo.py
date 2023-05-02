@@ -27,6 +27,9 @@ class Estudiante:
     def total(self):
         return self.carrito.total()
 
+    def vaciar(self):
+        self.carrito.vaciar_carrito()
+
 
 class Gestion:
     def __init__(self):
@@ -111,11 +114,16 @@ class Papeleria:
         self.estudiante_actual.eliminar(nombre)
 
     def mostrar_factura(self):
-        return self.carrito.items
+        total = self.total()
+        self.estudiante_actual.vaciar()
+        return total
 
     def total(self):
         total = self.estudiante_actual.total()
         return total
+
+    def mensaje_total(self, total):
+        return f"El valor total a pagar es {total}"
 
 class Carrito:
     def __init__(self):
@@ -135,6 +143,9 @@ class Carrito:
 
     def eliminar(self, nombre):
         self.items.pop(nombre)
+
+    def vaciar_carrito(self):
+        self.items.clear()
 
 
 class Item:

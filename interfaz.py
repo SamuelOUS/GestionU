@@ -16,7 +16,7 @@ class Ventana_principal(QMainWindow):
         self.seleccion = Seleccion()
 
 
-    def __clear(self):
+    def __vaciar(self):
         self.ingresar_id.clear()
         self.ingresar_contrasena.clear()
 
@@ -33,7 +33,7 @@ class Ventana_principal(QMainWindow):
             estudiante = self.ingresar_id.text()
             contrasena = self.ingresar_contrasena.text()
             self.gestion.iniciar_sesion(estudiante, contrasena)
-            self.__clear()
+            self.__vaciar()
 
 
         except EspaciosSinRellenar as err:
@@ -72,12 +72,12 @@ class Registro(QDialog):
         uic.loadUi("gui/ventana_registrarse.ui", self)
         self.setFixedSize(self.size())
         self.__botones()
-        self.__clear()
+        self.__vaciar()
 
     def __botones(self):
         self.Boton_registrar.accepted.connect(self.registro_ventana)
 
-    def __clear(self):
+    def __vaciar(self):
         self.lineEdit_Nombre.clear()
         self.lineEdit_Apellidos.clear()
         self.lineEdit_facultad.clear()
@@ -173,7 +173,8 @@ class Papeleria_Ventana(QDialog):
         self.list_view_productos.setModel(QStandardItemModel())
 
         self.Boton_agregar_carrito.clicked.connect(self.agregar_producto_carrito)
-        self.Boton_eliminar_carrito.clicked.connect(self.eliminar)
+        self.Boton_eliminar_carrito.clicked.connect(self.eliminar_carrito)
+        self.Boton_comprar.clicked.connect(self.comprar)
 
     def agregar_producto_carrito(self):
         cantidad , ok = QInputDialog.getInt(self, "Agregar producto a carrito", "Cantidad", 1)
@@ -207,7 +208,7 @@ class Papeleria_Ventana(QDialog):
         total = self.papeleria.total()
         self.lineEdit_total.setText("${:,.2f}".format(total))
 
-    def eliminar(self):
+    def eliminar_carrito(self):
         try:
             selection_model = self.tableView_carrito.selectionModel()
             model = self.tableView_carrito.model()
@@ -225,10 +226,21 @@ class Papeleria_Ventana(QDialog):
             mensaje_ventana.exec()
 
     def vaciar(self):
-
         modelo = self.tableView_carrito.model()
         for nombre in self.papeleria.estudiante_actual.carrito.items:
             modelo.removeRow(0)
+
+    def comprar(self):
+        self.vaciar()
+        total = self.papeleria.mostrar_factura()
+        mensaje = self.papeleria.mensaje_total(total)
+        mensaje_ventana = QMessageBox(self)
+        mensaje_ventana.setWindowTitle("COMPRA")
+        mensaje_ventana.setText(mensaje)
+        mensaje_ventana.setStandardButtons(QMessageBox.Ok)
+        mensaje_ventana.exec()
+        self.lineEdit_total.setText("")
+
 
     def __cargar_datos(self):
         productos = list(self.papeleria.productos.values())
@@ -237,9 +249,6 @@ class Papeleria_Ventana(QDialog):
             item.producto = producto
             item.setEditable(False)
             self.list_view_productos.model().appendRow(item)
-
-
-
 
 
 class Ventana_Calendario(QWidget):

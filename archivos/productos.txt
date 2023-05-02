@@ -1,4 +1,4 @@
-Lapiz,2500
+Lapiz,500
 Borrador,2500
 Lapicero,1000
 Portaminas,4000

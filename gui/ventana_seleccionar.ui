@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Seleccion</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: qlineargradient(spread:pad, x1:0.01, y1:0.210227, x2:0.746, y2:0.727955, stop:0.109453 rgba(255, 0, 0, 255), stop:1 rgba(255, 255, 255, 255));</string>
@@ -19,11 +19,15 @@
   <widget class="QPushButton" name="Boton_Papeleria">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>260</y>
+     <x>380</x>
+     <y>220</y>
      <width>301</width>
      <height>81</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 20pt &quot;Monospac821 BT&quot;;</string>
    </property>
    <property name="text">
     <string>PAPELERIA</string>
@@ -32,11 +36,15 @@
   <widget class="QPushButton" name="Boton_cerrar">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>580</y>
+     <x>40</x>
+     <y>620</y>
      <width>151</width>
      <height>81</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 10pt &quot;Monospac821 BT&quot;;</string>
    </property>
    <property name="text">
     <string>Cerrar Sesión</string>
@@ -45,14 +53,71 @@
   <widget class="QPushButton" name="Boton_calendario">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>370</y>
+     <x>380</x>
+     <y>330</y>
      <width>301</width>
      <height>81</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 20pt &quot;Monospac821 BT&quot;;</string>
+   </property>
    <property name="text">
     <string>CALENDARIO</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Boton_clima">
+   <property name="geometry">
+    <rect>
+     <x>380</x>
+     <y>440</y>
+     <width>301</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);
+font: 20pt &quot;Monospac821 BT&quot;;</string>
+   </property>
+   <property name="text">
+    <string>CLIMA</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>70</y>
+     <width>771</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">
+font: 75 10pt &quot;Monospac821 BT&quot;;</string>
+   </property>
+   <property name="text">
+    <string>BIENVENIDO AL SISTEMA DE GESTIONES UNIVERSITARIAS DE LA UNIVERSIDAD MEDELLIN</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>860</x>
+     <y>580</y>
+     <width>141</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>../imagenes/logo_u.png</pixmap>
    </property>
   </widget>
  </widget>
