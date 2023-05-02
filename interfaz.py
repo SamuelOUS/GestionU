@@ -130,12 +130,14 @@ class Seleccion(QDialog):
         self.setFixedSize(self.size())
         self.papeleria = Papeleria_Ventana()
         self.calendario = Ventana_Calendario()
+        self.clima = Ventana_clima()
 
         self.__botones()
 
     def __botones(self):
         self.Boton_Papeleria.clicked.connect(self.abrir_papeleria)
         self.Boton_calendario.clicked.connect(self.abrir_calendario)
+        self.Boton_clima.clicked.connect(self.abrir_clima)
         self.Boton_cerrar.clicked.connect(self.cerrar_sesion)
 
     def cerrar_sesion(self):
@@ -148,7 +150,7 @@ class Seleccion(QDialog):
         self.calendario.show()
 
     def abrir_clima(self):
-        pass
+        self.clima.exec()
 
 
 class Papeleria_Ventana(QDialog):
@@ -187,9 +189,9 @@ class Papeleria_Ventana(QDialog):
 
             except IndexError:
                 mensaje_ventana = QMessageBox(self)
-                mensaje_ventana.setWindowTitle("Error")
+                mensaje_ventana.setWindowTitle("ERROR")
                 mensaje_ventana.setIcon(QMessageBox.Warning)
-                mensaje_ventana.setText("debe seleccionar un producto")
+                mensaje_ventana.setText("DEBE SELECCIONAR UN PRODUCTO")
                 mensaje_ventana.setStandardButtons(QMessageBox.Ok)
                 mensaje_ventana.exec()
 
@@ -219,9 +221,9 @@ class Papeleria_Ventana(QDialog):
 
         except IndexError:
             mensaje_ventana = QMessageBox(self)
-            mensaje_ventana.setWindowTitle("Error")
+            mensaje_ventana.setWindowTitle("ERROR")
             mensaje_ventana.setIcon(QMessageBox.Warning)
-            mensaje_ventana.setText("debe seleccionar un item")
+            mensaje_ventana.setText("DEBE SELECCIONAR UN PRODUCTO")
             mensaje_ventana.setStandardButtons(QMessageBox.Ok)
             mensaje_ventana.exec()
 
@@ -235,7 +237,7 @@ class Papeleria_Ventana(QDialog):
         total = self.papeleria.mostrar_factura()
         mensaje = self.papeleria.mensaje_total(total)
         mensaje_ventana = QMessageBox(self)
-        mensaje_ventana.setWindowTitle("COMPRA")
+        mensaje_ventana.setWindowTitle("FACTURA")
         mensaje_ventana.setText(mensaje)
         mensaje_ventana.setStandardButtons(QMessageBox.Ok)
         mensaje_ventana.exec()
@@ -291,6 +293,12 @@ class Ventana_Calendario(QWidget):
         messageBox.exec()
 
         self.taskLineEdit.clear()
+
+class Ventana_clima(QDialog):
+    def __init__(self):
+        QDialog.__init__(self)
+        uic.loadUi("gui/clima.ui", self)
+        self.setFixedSize(self.size())
 
 
 

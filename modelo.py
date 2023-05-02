@@ -7,7 +7,7 @@ class Producto:
         self.precio: float = precio
 
     def __str__(self):
-        return f"Producto: {self.nombre} ------ Precio: {self.precio}"
+        return f"PRODUCTO: {self.nombre} ------ PRECIO: {self.precio}"
 
 class Estudiante:
     def __init__(self, nombre: str, apellidos: str, facultad: str, id: str, contrasena: str):
@@ -43,7 +43,7 @@ class Gestion:
             self.estudiantes[id] = estudiante
             self.agregar_estudiante(nombre, apellidos, facultad, id, contrasena)
         else:
-            raise CuentaExistenteError("Esta cuenta está registrada")
+            raise CuentaExistenteError("ESTA CUENTA ESTÁ REGISTRADA")
 
     def agregar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: str, contrasena: str):
         estudiante = Estudiante(nombre, apellidos, facultad, id, contrasena)
@@ -69,13 +69,13 @@ class Gestion:
 
     def iniciar_sesion(self, id: str, contrasena: str):
         if id == "" or contrasena == "":
-            raise EspaciosSinRellenar("debe lllenar todos los datos del ingreso")
+            raise EspaciosSinRellenar("DEBE LLENAR TODOS LOS CAMPOS PARA INGRESAR")
 
         if self.estaRegistrado(id) == False:
             raise CuentaNoExiste("esta cuenta no esta registrada")
 
         if self.contrasena_correcta(contrasena) == False:
-            raise ContrasenaIncorrecta("la contraseña no es correcta")
+            raise ContrasenaIncorrecta("LA CONTRASEÑA ES INCORRECTA")
         else:
             return True
 
@@ -123,7 +123,7 @@ class Papeleria:
         return total
 
     def mensaje_total(self, total):
-        return f"El valor total a pagar es {total}"
+        return f"EL VALOR TOTAL A PAGAR ES {total}"
 
 class Carrito:
     def __init__(self):
