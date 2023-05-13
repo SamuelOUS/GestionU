@@ -1,9 +1,11 @@
+import datetime
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow, QDialog, QMessageBox, QWidget, QAbstractItemView, QInputDialog
+from PyQt5.QtWidgets import QMainWindow, QDialog, QMessageBox, QWidget, QAbstractItemView, QInputDialog, QLabel
 from PyQt5.uic import loadUi
 from modelo import *
 from excepciones import *
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from PyQt5.QtGui import QStandardItemModel, QStandardItem, QFont
+
 
 class Ventana_principal(QMainWindow):
     def __init__(self):
@@ -14,7 +16,6 @@ class Ventana_principal(QMainWindow):
         self.registro = Registro()
         self.gestion = Gestion()
         self.seleccion = Seleccion()
-
 
     def __vaciar(self):
         self.ingresar_id.clear()
@@ -34,7 +35,6 @@ class Ventana_principal(QMainWindow):
             contrasena = self.ingresar_contrasena.text()
             self.gestion.iniciar_sesion(estudiante, contrasena)
             self.__vaciar()
-
 
         except EspaciosSinRellenar as err:
             mensaje_ventana = QMessageBox(self)
@@ -60,7 +60,6 @@ class Ventana_principal(QMainWindow):
             mensaje_ventana.setText(err.mensaje)
             mensaje_ventana.setStandardButtons(QMessageBox.Ok)
             mensaje_ventana.exec()
-
 
         else:
             self.seleccion.exec()
@@ -95,8 +94,7 @@ class Registro(QDialog):
 
                 gestion = Gestion()
                 print("-------------------")
-                gestion.registrar_estudiante(nombre,apellidos, facultad, id, contrasena)
-
+                gestion.registrar_estudiante(nombre, apellidos, facultad, id, contrasena)
 
                 mensaje_registro = QMessageBox(self)
                 mensaje_registro.setWindowTitle("NOTIFICACIÓN")
@@ -168,7 +166,7 @@ class Papeleria_Ventana(QDialog):
         table_model.setHorizontalHeaderLabels(["PRODUCTO", "CANTIDAD", "TOTAL"])
         self.tableView_carrito.setModel(table_model)
         self.tableView_carrito.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.tableView_carrito.setColumnWidth(0,200)
+        self.tableView_carrito.setColumnWidth(0, 200)
         self.tableView_carrito.setColumnWidth(1, 100)
         self.tableView_carrito.setColumnWidth(2, 160)
 
@@ -179,7 +177,7 @@ class Papeleria_Ventana(QDialog):
         self.Boton_comprar.clicked.connect(self.comprar)
 
     def agregar_producto_carrito(self):
-        cantidad , ok = QInputDialog.getInt(self, "Agregar producto a carrito", "Cantidad", 1)
+        cantidad, ok = QInputDialog.getInt(self, "Agregar producto a carrito", "Cantidad", 1)
 
         if ok:
             try:
@@ -243,7 +241,6 @@ class Papeleria_Ventana(QDialog):
         mensaje_ventana.exec()
         self.lineEdit_total.setText("")
 
-
     def __cargar_datos(self):
         productos = list(self.papeleria.productos.values())
         for producto in productos:
@@ -282,7 +279,6 @@ class Ventana_Calendario(QWidget):
             messageBox.setStandardButtons(QMessageBox.Ok)
             messageBox.exec()
 
-
     def eliminar(self):
         newTask = str(self.taskLineEdit.text())
         date = self.calendarWidget.selectedDate().toPyDate()
@@ -294,13 +290,20 @@ class Ventana_Calendario(QWidget):
 
         self.taskLineEdit.clear()
 
+
 class Ventana_clima(QDialog):
     def __init__(self):
         QDialog.__init__(self)
         uic.loadUi("gui/clima.ui", self)
         self.setFixedSize(self.size())
+        self.lable_desc = QLabel(self)
+        self.lable_desc.setGeometry(360, 205, 500, 100)
+        self.lable_desc.setText(desc_final)
+        self.lable_desc.setFont(QFont('Arial', 15))
+        self.lable_desc.setStyleSheet("QLabel { background-color : red; color : white; }")
 
-
-
-
-
+        self.lable_temp = QLabel(self)
+        self.lable_temp.setGeometry(440, 200, 200, 20)
+        self.lable_temp.setText(str(temp_final))
+        self.lable_temp.setFont(QFont('Arial', 15))
+        self.lable_temp.setStyleSheet("QLabel { background-color : red; color : white; }")

@@ -1,1 +1,2 @@
 5,5,5,5,5
+Samuel,Osorio Uribe,Ingenieria,1011510580,1234

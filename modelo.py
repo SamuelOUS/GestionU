@@ -1,5 +1,7 @@
 import csv
 from excepciones import *
+import requests
+
 
 class Producto:
     def __init__(self, nombre: str, precio: float):
@@ -8,6 +10,7 @@ class Producto:
 
     def __str__(self):
         return f"PRODUCTO: {self.nombre} ------ PRECIO: {self.precio}"
+
 
 class Estudiante:
     def __init__(self, nombre: str, apellidos: str, facultad: str, id: str, contrasena: str):
@@ -34,9 +37,9 @@ class Estudiante:
 class Gestion:
     def __init__(self):
         self.estudiantes = {}
-        self.nuevo_usuario: Estudiante = Estudiante("","","","","")
+        self.nuevo_usuario: Estudiante = Estudiante("", "", "", "", "")
 
-    def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: str , contrasena: str):
+    def registrar_estudiante(self, nombre: str, apellidos: str, facultad: str, id: str, contrasena: str):
 
         if self.estaRegistrado(id) is False:
             estudiante = Estudiante(nombre, apellidos, facultad, id, contrasena)
@@ -96,7 +99,7 @@ class Papeleria:
         self.productos = {}
         self.__cargar_productos()
         self.carrito = Carrito()
-        self.estudiante_actual: Estudiante = Estudiante("","","","","")
+        self.estudiante_actual: Estudiante = Estudiante("", "", "", "", "")
 
     def __cargar_productos(self):
         with open("./archivos/productos.txt") as file:
@@ -124,6 +127,7 @@ class Papeleria:
 
     def mensaje_total(self, total):
         return f"EL VALOR TOTAL A PAGAR ES {total}"
+
 
 class Carrito:
     def __init__(self):
@@ -154,7 +158,8 @@ class Item:
         self.cantidad: int = cantidad
 
     def __str__(self):
-        return f"NOMBRE = {self.item}     CANTIDAD = {self.cantidad}"
+        return f"NOMBRE = {self.producto.nombre}     CANTIDAD = {self.cantidad}"
+
 
 class Calendario:
     def __init__(self, dia: int, mes: int, año: int):
@@ -166,12 +171,19 @@ class Calendario:
         return f"Dia: {self.dia} ---Mes: {self.mes}---- Año: {self.año}"
 
 
+class Clima:
+
+    def obtener_clima(self):
+        url = f"http://api.openweathermap.org/data/2.5/weather?q=Medellin&appid=644e753bbed478fed4180528f27c9a24&units=metric"
+        respuesta = requests.get(url)
+        datos_clima = respuesta.json()
+        return datos_clima
 
 
+Clima_Medellin = Clima()
+datos_clima = Clima_Medellin.obtener_clima()
+temperatura = datos_clima["main"]["temp"]
+descripcion = datos_clima["weather"][0]["description"]
 
-
-
-
-
-
-
+temp_final = "the temp is: " + str(temperatura)
+desc_final = "the weather todays is: " + str(descripcion)
